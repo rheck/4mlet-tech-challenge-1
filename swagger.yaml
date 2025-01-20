@@ -1,0 +1,445 @@
+openapi: 3.0.3
+info:
+  title: Tech Challenge 1 - Dados da Vitivinicultura
+  description: |-
+    Esta API faz um scraping dos dados da Vitivinicultura disponibilizados no site da Embrapa.
+
+    Todos os dados são solicitados em tempo real ao site da Embrapa. Caso o link não esteja disponível, 
+    os dados são solicitados a uma base de dados.
+
+    Toda requisição respondida com sucesso, atualiza o banco de dados com os dados mais atualizados, 
+    dessa forma, qualquer instabilidade no link da Embrapa, os últimos dados retornados são respondidos pela API.
+
+    Autor: Ricardo Heck (rm360046)
+
+    FIAP - Pós em Machine Learning Engineering
+
+    Links úteis:
+    - [Site contendo os dados da Vitivinicultura](http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_06)
+  contact:
+    email: bheck.ricardo@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: https://localhost:5000
+tags:
+  - name: Produção
+    description: Produção de vinhos, sucos e derivados do Rio Grande do Sul
+    externalDocs:
+      description: Mais informações
+      url: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_02
+  - name: Processamento
+    description: Quantidade de uvas processadas no Rio Grande do Sul
+    externalDocs:
+      description: Mais informações
+      url: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_03
+  - name: Comercialização
+    description: Comercialização de vinhos e derivados no Rio Grande do Sul
+    externalDocs:
+      description: Mais informações
+      url: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_04
+  - name: Importação
+    description: Importação de derivados de uva
+    externalDocs:
+      description: Mais informações
+      url: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_05
+  - name: Exportação
+    description: Exportação de derivados de uva
+    externalDocs:
+      description: Mais informações
+      url: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_06
+  - name: Authenticação
+    description: Gerenciamento de autenticação
+paths:
+  /production:
+    get:
+      tags:
+        - Produção
+      summary: Lista as informações de produção
+      description: Rota para buscar e listar todas as informações relativas a produção.
+      operationId: production
+      parameters:
+        - name: year
+          in: query
+          description: Ano que deve ser considerado no filtro
+          required: false
+          explode: false
+          schema:
+            type: integer
+            default: 2023
+            minimum: 1970
+            maximum: 2023
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quantity"
+        "400":
+          description: Não foi possível encontrar os dados
+      security:
+        - bearerAuth: []
+  /processing:
+    get:
+      tags:
+        - Processamento
+      summary: Lista as informações de processamento
+      description: Rota para buscar e listar todas as informações relativas ao processamento.
+      operationId: processing
+      parameters:
+        - name: year
+          in: query
+          description: Ano que deve ser considerado no filtro
+          required: false
+          explode: false
+          schema:
+            type: integer
+            default: 2023
+            minimum: 1970
+            maximum: 2023
+        - name: category
+          in: query
+          description: Categoria que deve ser considerada no filtro
+          required: false
+          explode: false
+          schema:
+            type: string
+            default: viniferas
+            enum:
+              - viniferas
+              - american_and_hybrid
+              - table_grapes
+              - unclassified
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quantity"
+        "400":
+          description: Não foi possível encontrar os dados
+      security:
+        - bearerAuth: []
+  /commercialization:
+    get:
+      tags:
+        - Comercialização
+      summary: Lista as informações de comercialização
+      description: Rota para buscar e listar todas as informações relativas a comercialização.
+      operationId: commercialization
+      parameters:
+        - name: year
+          in: query
+          description: Ano que deve ser considerado no filtro
+          required: false
+          explode: false
+          schema:
+            type: integer
+            default: 2023
+            minimum: 1970
+            maximum: 2023
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quantity"
+        "400":
+          description: Não foi possível encontrar os dados
+      security:
+        - bearerAuth: []
+  /imported:
+    get:
+      tags:
+        - Importação
+      summary: Lista as informações de importação
+      description: Rota para buscar e listar todas as informações relativas a importação.
+      operationId: imported
+      parameters:
+        - name: year
+          in: query
+          description: Ano que deve ser considerado no filtro
+          required: false
+          explode: false
+          schema:
+            type: integer
+            default: 2023
+            minimum: 1970
+            maximum: 2023
+        - name: category
+          in: query
+          description: Categoria que deve ser considerada no filtro
+          required: false
+          explode: false
+          schema:
+            type: string
+            default: table_grapes
+            enum:
+              - table_grapes
+              - sparkling
+              - fresh_grapes
+              - raisins
+              - grape_juice
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Country"
+        "400":
+          description: Não foi possível encontrar os dados
+      security:
+        - bearerAuth: []
+  /exported:
+    get:
+      tags:
+        - Exportação
+      summary: Lista as informações de exportação
+      description: Rota para buscar e listar todas as informações relativas a exportação.
+      operationId: exported
+      parameters:
+        - name: year
+          in: query
+          description: Ano que deve ser considerado no filtro
+          required: false
+          explode: false
+          schema:
+            type: integer
+            default: 2023
+            minimum: 1970
+            maximum: 2023
+        - name: category
+          in: query
+          description: Categoria que deve ser considerada no filtro
+          required: false
+          explode: false
+          schema:
+            type: string
+            default: table_grapes
+            enum:
+              - table_grapes
+              - sparkling
+              - fresh_grapes
+              - grape_juice
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Country"
+        "400":
+          description: Não foi possível encontrar os dados
+      security:
+        - bearerAuth: []
+  /authentication/login:
+    post:
+      tags:
+        - Authenticação
+      summary: Efetuar o login
+      description: Rota para efetuar o login e gerar o token JWT.
+      operationId: login
+      requestBody:
+        description: Dados de login
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccessToken"
+        "401":
+          description: Não foi possível encontrar os dados
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccessTokenError"
+  /authentication/register:
+    post:
+      tags:
+        - Authenticação
+      summary: Registrar um usuário
+      description: Rota para registrar um usuário.
+      operationId: register
+      requestBody:
+        description: Dados do usuário
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        "201":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Register"
+        "400":
+          description: Campos obrigatórios não enviados ou usuário já existe
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterError"
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    Quantity:
+      type: object
+      properties:
+        success:
+          type: boolean
+        year:
+          type: string
+          example: 2023
+        category:
+          type: string
+          example: "table_grapes"
+        is_realtime:
+          type: boolean
+        parse_date:
+          type: string
+          format: date-time
+        totals:
+          type: integer
+          format: int32
+          example: 457792870
+        totals_text:
+          type: string
+          example: "457.792.870"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuantityItem"
+    QuantityItem:
+      type: object
+      properties:
+        name:
+          type: string
+          example: VINHO DE MESA
+        quantity:
+          type: integer
+          format: int32
+          example: 169762429
+        quantity_text:
+          type: string
+          example: "168.762.429"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuantitySubItem"
+    QuantitySubItem:
+      type: object
+      properties:
+        name:
+          type: string
+          example: VINHO DE MESA
+        quantity:
+          type: integer
+          format: int32
+          example: 169762429
+        quantity_text:
+          type: string
+          example: "168.762.429"
+    Country:
+      type: object
+      properties:
+        success:
+          type: boolean
+        year:
+          type: string
+          example: 2023
+        category:
+          type: string
+          example: "table_grapes"
+        is_realtime:
+          type: boolean
+        parse_date:
+          type: string
+          format: date-time
+        totals:
+          type: integer
+          format: int32
+          example: 457792870
+        totals_text:
+          type: string
+          example: "457.792.870"
+        value:
+          type: integer
+          format: int32
+          example: 457792870
+        value_text:
+          type: string
+          example: "457.792.870"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CountryItem"
+    CountryItem:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Alemanha
+        quantity:
+          type: integer
+          format: int32
+          example: 169762429
+        quantity_text:
+          type: string
+          example: "168.762.429"
+        value:
+          type: integer
+          format: int32
+          example: 557947
+        value_text:
+          type: string
+          example: "557.947"
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    Register:
+      type: object
+      properties:
+        message:
+          type: string
+    RegisterError:
+      type: object
+      properties:
+        message:
+          type: string
+    AccessToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczNzMzODM1MiwianRpIjoiMjY0ZGU3NzktNmVhMi00MTYyLTkwZmYtNmIxYTVmY2Q4Yzc3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNzM3MzM4MzUyLCJjc3JmIjoiMzM3MDZkYjAtNmVlMC00NWQxLWE3MTItMGMwYTRhNWZmYzZhIiwiZXhwIjoxNzM3MzM5MjUyfQ.r0ISY86aYGWlCqTTNekUoENSShdK9CesFYzt8P-fOIk
+      required:
+        - access_token
+    AccessTokenError:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT # optional, arbitrary value for documentation purposes
