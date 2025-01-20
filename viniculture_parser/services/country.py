@@ -1,12 +1,13 @@
-from viniculture_parser.models import db, country_category, country_item
+from viniculture_parser.models import country_category, country_item
+from viniculture_parser.models.db import db
 from viniculture_parser.utils.date import get_datetime
 from viniculture_parser.utils.table import get_database_int
 
 def persist_parsed_content(parsed_content, quantity, value, category, year, entity):
     already_exists = country_category.CountryCategory.query.filter_by(category=category, year=year, entity=entity).first()
     if already_exists is not None:
-        db.instance.session.delete(already_exists)
-        db.instance.session.commit()
+        db.session.delete(already_exists)
+        db.session.commit()
     
     new_category = country_category.CountryCategory(
         entity=entity,
@@ -24,8 +25,8 @@ def persist_parsed_content(parsed_content, quantity, value, category, year, enti
         
         new_category.items.append(new_item)
     
-    db.instance.session.add(new_category)
-    db.instance.session.commit()
+    db.session.add(new_category)
+    db.session.commit()
 
 def load_parsed_content(category, year, entity) -> tuple[bool, list, int, str, int, str, str]:
     saved_category = country_category.CountryCategory.query.filter_by(category=category, year=year, entity=entity).first()

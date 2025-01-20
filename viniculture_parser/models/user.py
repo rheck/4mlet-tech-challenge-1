@@ -1,7 +1,7 @@
-from viniculture_parser.models import db
+from viniculture_parser.models.db import db
 
 # Modelo de Usuário
-class User(db.instance.Model):
-    id = db.instance.Column(db.instance.Integer, primary_key=True)
-    username = db.instance.Column(db.instance.String(80), unique=True, nullable=False)
-    password = db.instance.Column(db.instance.String(200), nullable=False)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)

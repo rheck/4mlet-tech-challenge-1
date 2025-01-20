@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from viniculture_parser.models import db
+from viniculture_parser.models.db import db
 from viniculture_parser.models.user import User
 
 authentication = Blueprint("authentication", __name__)
@@ -21,8 +21,8 @@ def register():
 
     hashed_password = generate_password_hash(password)
     new_user = User(username=username, password=hashed_password)
-    db.instance.session.add(new_user)
-    db.instance.session.commit()
+    db.session.add(new_user)
+    db.session.commit()
 
     return jsonify({"message": "User registered successfully"}), 201
 

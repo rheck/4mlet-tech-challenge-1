@@ -1,11 +1,11 @@
 from viniculture_parser.utils import table as table_utils
-from viniculture_parser.models import db
+from viniculture_parser.models.db import db
 
-class QuantitySubItem(db.instance.Model):
-    id = db.instance.Column(db.instance.Integer, primary_key=True)
-    name = db.instance.Column(db.instance.String(255), nullable=False)
-    quantity = db.instance.Column(db.instance.String(255))
-    quantity_item_id = db.instance.Column(db.instance.Integer, db.instance.ForeignKey("quantity_item.id"))
+class QuantitySubItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    quantity = db.Column(db.String(255))
+    quantity_item_id = db.Column(db.Integer, db.ForeignKey("quantity_item.id"))
     
     @property
     def serialize(self):

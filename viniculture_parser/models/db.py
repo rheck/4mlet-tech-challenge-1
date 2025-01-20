@@ -1,9 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 
-instance = SQLAlchemy()
+db = SQLAlchemy()
 
-def init_db(app):
-    instance.init_app(app)
+# def init_db(app):
+#     instance.init_app(app)
     
-    with app.app_context():
-        instance.create_all()
+#     with app.app_context():
+#         instance.create_all()

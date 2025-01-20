@@ -1,15 +1,15 @@
 from viniculture_parser.utils import table as table_utils
-from viniculture_parser.models import db
+from viniculture_parser.models.db import db
 
-class CountryCategory(db.instance.Model):
-    id = db.instance.Column(db.instance.Integer, primary_key=True)
-    entity = db.instance.Column(db.instance.String(255), nullable=False)
-    category = db.instance.Column(db.instance.String(255), nullable=False)
-    quantity = db.instance.Column(db.instance.String(255))
-    value = db.instance.Column(db.instance.String(255))
-    year = db.instance.Column(db.instance.String(4), nullable=False)
-    modified_date = db.instance.Column(db.instance.String(255))
-    items = db.instance.relationship("CountryItem", cascade="all,delete", backref="category")
+class CountryCategory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    entity = db.Column(db.String(255), nullable=False)
+    category = db.Column(db.String(255), nullable=False)
+    quantity = db.Column(db.String(255))
+    value = db.Column(db.String(255))
+    year = db.Column(db.String(4), nullable=False)
+    modified_date = db.Column(db.String(255))
+    items = db.relationship("CountryItem", cascade="all,delete", backref="category")
     
     @property
     def serialize(self):

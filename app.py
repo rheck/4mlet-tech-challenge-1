@@ -4,7 +4,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 import io
 
 from viniculture_parser import config
-from viniculture_parser.models import db
+from viniculture_parser.models.db import db
 from viniculture_parser.routes.authentication import authentication
 from viniculture_parser.routes.production import production
 from viniculture_parser.routes.commercialization import commercialization
@@ -19,6 +19,10 @@ app.config["JWT_SECRET_KEY"] = config.jwt_secret_key
 app.config["JWT_VERIFY_SUB"] = False
 
 jwt = JWTManager(app)
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 app.register_blueprint(authentication, url_prefix="/authentication")
 app.register_blueprint(production, url_prefix="/production")
@@ -52,5 +56,4 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 app.register_blueprint(swaggerui_blueprint)
 
 if __name__ == "__main__":
-    db.init_db(app)
     app.run(debug=config.debug_application)
