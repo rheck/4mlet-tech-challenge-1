@@ -10,7 +10,7 @@ import traceback
 processing = Blueprint("processing", __name__)
 
 @processing.route("/", methods=["GET"])
-# @jwt_required() # TODO: Enable JWT authentication
+@jwt_required()
 def route():
     site_suboption = request.args.get("category", config.processing_default_suboption)
     is_valid_suboption, suboption = mappings.get_processing_suboption(site_suboption)

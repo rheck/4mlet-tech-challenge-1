@@ -9,7 +9,7 @@ from viniculture_parser import config
 exported = Blueprint("exported", __name__)
 
 @exported.route("/", methods=["GET"])
-# @jwt_required() # TODO: Enable JWT authentication
+@jwt_required()
 def route():
     site_suboption = request.args.get("category", config.exported_default_suboption)
     is_valid_suboption, suboption = mappings.get_exported_suboption(site_suboption)

@@ -10,7 +10,7 @@ import traceback
 production = Blueprint("production", __name__)
 
 @production.route("/", methods=["GET"])
-# @jwt_required() # TODO: Enable JWT authentication
+@jwt_required()
 def route():
     year = request.args.get("year", "2023")
     is_valid_year, year_validation_error = validators.validate_year(year)
