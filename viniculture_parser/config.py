@@ -3,7 +3,7 @@ import os
 
 load_dotenv()
 
-debug_application = os.environ.get("DEBUG", False)
+debug_application = True if os.environ.get("DEBUG") == "true" else False
 application_timezone = os.environ.get("TIMEZONE", "America/Sao_Paulo")
 
 site_base_url = os.getenv("SERVICE_BASE_URL", "")

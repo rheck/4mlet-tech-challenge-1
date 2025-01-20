@@ -23,7 +23,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-  - url: https://localhost:5000
+  - url: https://rheck-4mlet-tech-challenge-1.vercel.app/
 tags:
   - name: Produção
     description: Produção de vinhos, sucos e derivados do Rio Grande do Sul
