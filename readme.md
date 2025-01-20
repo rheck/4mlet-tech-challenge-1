@@ -57,11 +57,11 @@ Os dados escavados são disponibilizados em diferentes endpoints de API no proje
 As classificações estão disponíveis conforme tabela abaixo:
 | Classificação dos dados | Endpoint de API | Documentação |
 | ------ | ------ | ------ |
-| Produção | `/production` | TODO link |
-| Processamento | `/processing` | TODO link |
-| Comercialização | `/commercialization` | TODO link |
-| Importação | `/imported` | TODO link |
-| Exportação | `/exported` | TODO link |
+| Produção | `/production` | [Mais informações](https://github.com/rheck/4mlet-tech-challenge-1/blob/main/docs/production.md) |
+| Processamento | `/processing` | [Mais informações](https://github.com/rheck/4mlet-tech-challenge-1/blob/main/docs/processing.md) |
+| Comercialização | `/commercialization` | [Mais informações](https://github.com/rheck/4mlet-tech-challenge-1/blob/main/docs/commercialization.md) |
+| Importação | `/imported` | [Mais informações](https://github.com/rheck/4mlet-tech-challenge-1/blob/main/docs/imported.md) |
+| Exportação | `/exported` | [Mais informações](https://github.com/rheck/4mlet-tech-challenge-1/blob/main/docs/exported.md) |
 
 ## Redundância dos dados
 
