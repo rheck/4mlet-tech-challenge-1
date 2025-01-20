@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Tech Challenge 1 - Dados da Vitivinicultura
   description: |-
-    Esta API faz um scraping dos dados da Vitivinicultura disponibilizados no site da Embrapa.
+    Esta API faz um scrapping dos dados da Vitivinicultura disponibilizados no site da Embrapa.
 
     Todos os dados são solicitados em tempo real ao site da Embrapa. Caso o link não esteja disponível, 
     os dados são solicitados a uma base de dados.
