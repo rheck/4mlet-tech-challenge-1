@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, send_file
-from flask_jwt_extended import JWTManager, jwt_required
+from flask_jwt_extended import JWTManager
 from flask_swagger_ui import get_swaggerui_blueprint
 import io
 
@@ -30,17 +30,6 @@ app.register_blueprint(processing, url_prefix="/processing")
 app.register_blueprint(commercialization, url_prefix="/commercialization")
 app.register_blueprint(imported, url_prefix="/imported")
 app.register_blueprint(exported, url_prefix="/exported")
-
-@app.route("/config")
-def config_route():
-    return jsonify({
-        'debug_application': config.debug_application,
-        'application_timezone': config.application_timezone,
-
-        'site_base_url': config.site_base_url,
-        'database_url': config.database_url,
-        'jwt_secret_key': config.jwt_secret_key
-    })
 
 @app.route("/swagger")
 def swagger():
