@@ -33,6 +33,11 @@ app.register_blueprint(exported, url_prefix="/exported")
 
 @app.route("/swagger")
 def swagger():
+    """Route to read the swagger.yaml file and returns it.
+    
+    Returns:
+        A YAML binary content.
+    """
     with open("swagger.yaml", "rb") as f:
         bytes = io.BytesIO(f.read())
     return send_file(bytes, mimetype="application/yaml")

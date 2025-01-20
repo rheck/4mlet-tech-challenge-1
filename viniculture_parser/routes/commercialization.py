@@ -12,6 +12,14 @@ commercialization = Blueprint("commercialization", __name__)
 @commercialization.route("/", methods=["GET"])
 @jwt_required()
 def route():
+    """API endpoint to return the commercialization data from Embrapa viniculture site.
+    
+    Args:
+      year: The year to be used in the data filter.
+        
+    Returns:
+      A JSON with all the information scrapped from the Embrapa viniculture site.
+    """
     year = request.args.get("year", "2023")
     is_valid_year, year_validation_error = validators.validate_year(year)
     if not is_valid_year:

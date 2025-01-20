@@ -11,6 +11,15 @@ exported = Blueprint("exported", __name__)
 @exported.route("/", methods=["GET"])
 @jwt_required()
 def route():
+    """API endpoint to return the countries export data from Embrapa viniculture site.
+    
+    Args:
+      year: The year to be used in the data filter.
+      category: The suboption to be used in the data filter.
+        
+    Returns:
+      A JSON with all the information scrapped from the Embrapa viniculture site.
+    """
     site_suboption = request.args.get("category", config.exported_default_suboption)
     is_valid_suboption, suboption = mappings.get_exported_suboption(site_suboption)
     if not is_valid_suboption:

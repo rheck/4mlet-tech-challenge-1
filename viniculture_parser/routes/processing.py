@@ -12,6 +12,15 @@ processing = Blueprint("processing", __name__)
 @processing.route("/", methods=["GET"])
 @jwt_required()
 def route():
+    """API endpoint to return processing data from Embrapa viniculture site.
+    
+    Args:
+      year: The year to be used in the data filter.
+      category: The suboption to be used in the data filter.
+        
+    Returns:
+      A JSON with all the information scrapped from the Embrapa viniculture site.
+    """
     site_suboption = request.args.get("category", config.processing_default_suboption)
     is_valid_suboption, suboption = mappings.get_processing_suboption(site_suboption)
     if not is_valid_suboption:
