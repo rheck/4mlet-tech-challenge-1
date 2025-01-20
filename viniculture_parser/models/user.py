@@ -1,6 +1,5 @@
 from viniculture_parser.models.db import db
 
-# Modelo de Usuário
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
